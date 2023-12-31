@@ -12,7 +12,6 @@ def main():
     os.system('cls')
 
     if userInput == 'help accuracyByVolume':
-        print(f'accuracyByVolume option runs accuracyByVolume simulation')
         print(f'accuracyByVolume compares a set list of tickets (quantity set by user) against one winning number.\nAll numbers are distributed evenly between tickets\n')
         input('Press enter to continue...')
         os.system('cls')
@@ -45,12 +44,34 @@ def accuracyByVolume():
     Player = player()
     Lottery = lottery()
     ticks = 0
-    printSpeed = 10000
+
+    ##Initializes print speed. This is the screens refresh rate.
+    printSpeed = 0
+    while True:
+        userinput = input(f'Enter desired print speed\nThis is how many tickets you will buy before the screen refreshes.\nRecommended 10000\n')
+        try:
+            userinput = int(userinput)
+            printSpeed = userinput
+            break
+        except:
+            print('cls')
+            print('That was an invalid input. Please enter an integer.')
+            continue
+
+    ##Generates players tickets
     numberUsage = {}
     for i in range(1, 70):
         numberUsage[i] = 0
     currentPowerball = 1
-    while len(Player.numbers) < 26*69:
+    while True:
+        try:
+            tickets = int(input(f'How many tickets would you like to buy?\n'))
+            print('Running simulation. This may take a while depending on how many tickets the player has. A larger print speed means a slower update rate as well.')
+            break
+        except:
+            print('cls')
+            print('Sorry, that input does not seem to be valid. Please input an integer.')
+    while len(Player.numbers) < tickets:
         temp = []
         while len(temp) < 5:
             number = random.choice([j for j in numberUsage if numberUsage[j]==min(numberUsage.values())])
@@ -66,6 +87,8 @@ def accuracyByVolume():
         else:
             for i in range(5):
                 numberUsage[temp[i]] += 1
+
+    ##Generates a winning lottery number and compares it to the players numbers.
     while Player.balance > 0:
         ticks += 1
         Lottery.generateWinningNumbers()
