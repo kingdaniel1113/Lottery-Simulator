@@ -5,6 +5,7 @@ body{
     background-color: purple;
     margin: 0;
     padding: 0;
+    padding-bottom: 100vh;
 }
 
 header{
@@ -51,6 +52,10 @@ main h1, main p{
 
 main p{
     font-size: 24px;
+}
+
+main h1:target{
+    scroll-margin-top: 50px;
 }
 
 a, a:hover, a:visited{
